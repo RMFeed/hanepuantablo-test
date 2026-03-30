@@ -2,199 +2,91 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Wyxen Academy - House Points</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gold: #ffcc33;
-            --sly: #2ecc71; --rav: #3498db; --gry: #e74c3c; --huf: #f1c40f;
-            --panel-bg: rgba(14, 16, 22, 0.98);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: transparent; 
-            color: white; 
-            font-family: 'Montserrat', sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            overflow: hidden; 
-        }
-
-        .points-panel {
-            width: 820px;
-            background: var(--panel-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 35px;
-            padding: 40px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
-            backdrop-filter: blur(20px);
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 25px;
-            right: 30px;
-            font-size: 30px;
-            cursor: pointer;
-            color: #555;
-            transition: 0.2s;
-        }
-        .close-btn:hover { color: var(--gry); }
-
-        .header { text-align: center; margin-bottom: 35px; }
-        .header h1 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 2.8rem; letter-spacing: 12px; }
-        .header .decorator { height: 2px; width: 250px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 12px auto; }
-        .header p { font-size: 0.8rem; letter-spacing: 5px; color: #555; text-transform: uppercase; }
-
-        .chart-container {
-            background: rgba(0,0,0,0.4);
-            border-radius: 20px;
-            padding: 60px 20px 20px 20px;
-            height: 350px; 
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end; 
-            margin-bottom: 30px;
-            border: 1px solid rgba(255,255,255,0.03);
-        }
-
-        .bar-wrapper {
+        body {
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            font-family: 'Aptos Display', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            width: 1024px;
+            height: 1024px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100%;
-            justify-content: flex-end;
-            width: 100px;
+            justify-content: center;
         }
-
-        .point-bar {
-            width: 55px;
-            border-radius: 12px 12px 4px 4px;
-            position: relative;
-            min-height: 15px;
-            transition: height 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .score-label {
-            position: absolute;
-            top: -35px;
-            width: 100%;
-            text-align: center;
-            font-weight: 800;
-            color: #fff;
-            font-size: 1.2rem;
-        }
-
-        .house-logo-main {
-            width: 45px; height: 45px;
-            margin-top: 15px;
-            object-fit: contain;
-        }
-
-        .sly { background: linear-gradient(to top, #1b4d31, var(--sly)); box-shadow: 0 0 25px rgba(46, 204, 113, 0.2); }
-        .rav { background: linear-gradient(to top, #1a3a5a, var(--rav)); box-shadow: 0 0 25px rgba(52, 152, 219, 0.2); }
-        .gry { background: linear-gradient(to top, #5a1a1a, var(--gry)); box-shadow: 0 0 25px rgba(231, 76, 60, 0.2); }
-        .huf { background: linear-gradient(to top, #b8860b, var(--huf)); box-shadow: 0 0 25px rgba(241, 196, 15, 0.2); }
-
-        .mvp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .mvp-box {
-            background: rgba(255,255,255,0.02);
-            padding: 15px 20px;
-            border-radius: 18px;
+        .container {
+            width: 90%;
+            height: 90%;
+            border: 5px solid #d4af37;
+            padding: 20px;
             display: flex;
-            align-items: center;
-            gap: 15px;
-            border: 1px solid rgba(255,255,255,0.03);
+            flex-direction: column;
         }
-
-        .mini-logo { width: 40px; height: 40px; object-fit: contain; }
-        .mvp-info b { font-size: 1.1rem; display: block; color: #eee; }
-        .mvp-info span { color: #666; font-size: 0.85rem; font-weight: 600; }
-        .mvp-info i { color: var(--gold); font-style: normal; font-weight: 700; }
+        h1 { color: #d4af37; text-align: center; font-size: 60px; margin-bottom: 10px; }
+        .stats-row { display: flex; justify-content: space-around; align-items: flex-end; height: 400px; margin-top: 50px; }
+        .bar-container { display: flex; flex-direction: column; align-items: center; width: 150px; }
+        .bar { width: 60px; transition: height 0.5s ease-in-out; }
+        .puan { font-size: 35px; font-weight: bold; margin-top: 10px; }
+        .mvp-list { margin-top: 50px; font-size: 30px; }
+        .mvp-item { margin: 10px 0; display: flex; justify-content: space-between; border-bottom: 1px solid #444; }
+        
+        .gryf { background-color: #c82828; color: #c82828; }
+        .sly { background-color: #28a064; color: #28a064; }
+        .rav { background-color: #325ac8; color: #325ac8; }
+        .huf { background-color: #f0be28; color: #f0be28; }
     </style>
 </head>
 <body>
-
-    <div class="points-panel">
-        <div class="close-btn" onclick="gmod.closeMe()">×</div>
-        <div class="header">
-            <h1>WYXEN</h1>
-            <div class="decorator"></div>
-            <p>Hane Tablosu</p>
+    <div class="container">
+        <h1>WYXEN HOGWARTS</h1>
+        <div class="stats-row">
+            <div class="bar-container">
+                <div id="bar_sly" class="bar sly" style="height: 0px;"></div>
+                <div id="puan_sly" class="puan sly">0</div>
+            </div>
+            <div class="bar-container">
+                <div id="bar_rav" class="bar rav" style="height: 0px;"></div>
+                <div id="puan_rav" class="puan rav">0</div>
+            </div>
+            <div class="bar-container">
+                <div id="bar_gryf" class="bar gryf" style="height: 0px;"></div>
+                <div id="puan_gryf" class="puan gryf">0</div>
+            </div>
+            <div class="bar-container">
+                <div id="bar_huf" class="bar huf" style="height: 0px;"></div>
+                <div id="puan_huf" class="puan huf">0</div>
+            </div>
         </div>
-
-        <div class="chart-container" id="house-chart">
-            </div>
-
-        <div class="mvp-grid" id="mvp-grid">
-            </div>
+        <div class="mvp-list">
+            <div class="mvp-item"><span class="sly">Slytherin MVP:</span> <span id="mvp_sly">-</span></div>
+            <div class="mvp-item"><span class="rav">Ravenclaw MVP:</span> <span id="mvp_rav">-</span></div>
+            <div class="mvp-item"><span class="gryf">Gryffindor MVP:</span> <span id="mvp_gryf">-</span></div>
+            <div class="mvp-item"><span class="huf">Hufflepuff MVP:</span> <span id="mvp_huf">-</span></div>
+        </div>
     </div>
 
     <script>
-        function updateTable(data) {
-            const chart = document.getElementById('house-chart');
-            const grid = document.getElementById('mvp-grid');
-            
-            chart.innerHTML = '';
-            grid.innerHTML = '';
+        // Lua'dan gelen veriyi yakalayan fonksiyon
+        function updateData(data) {
+            const carpan = 0.5; // Bar boyutu ayarı
+            document.getElementById('puan_gryf').innerText = data.gp;
+            document.getElementById('bar_gryf').style.height = (data.gp * carpan) + 'px';
+            document.getElementById('mvp_gryf').innerText = data.gm;
 
-            const houses = [
-                { id: 'sly', key: 'Slytherin', img: 'https://i.imgur.com/ORx7ROn.png' },
-                { id: 'rav', key: 'Ravenclaw', img: 'https://i.imgur.com/Zu5zgMS.png' },
-                { id: 'gry', key: 'Gryffindor', img: 'https://i.imgur.com/sNbRwux.png' },
-                { id: 'huf', key: 'Hufflepuff', img: 'https://i.imgur.com/0c3csjs.png' }
-            ];
+            document.getElementById('puan_sly').innerText = data.sp;
+            document.getElementById('bar_sly').style.height = (data.sp * carpan) + 'px';
+            document.getElementById('mvp_sly').innerText = data.sm;
 
-            // En yüksek puanı bul (Yükseklik oranlaması için)
-            let maxP = 1;
-            houses.forEach(h => {
-                let p = parseInt(data[h.key].score) || 0;
-                if (p > maxP) maxP = p;
-            });
+            document.getElementById('puan_rav').innerText = data.rp;
+            document.getElementById('bar_rav').style.height = (data.rp * carpan) + 'px';
+            document.getElementById('mvp_rav').innerText = data.rm;
 
-            houses.forEach(h => {
-                const hData = data[h.key];
-                const score = hData.score || 0;
-                const height = (score / maxP) * 90; // En yüksek hane %90 boyunda olur
-
-                // Grafik barını ekle
-                chart.innerHTML += `
-                    <div class="bar-wrapper">
-                        <div class="point-bar ${h.id}" style="height: 0%" id="bar-${h.id}">
-                            <div class="score-label">${score}</div>
-                        </div>
-                        <img src="${h.img}" class="house-logo-main">
-                    </div>
-                `;
-
-                // Animasyon için gecikmeli yükseklik ver
-                setTimeout(() => {
-                    document.getElementById(`bar-${h.id}`).style.height = height + "%";
-                }, 100);
-
-                // MVP kutusunu ekle
-                grid.innerHTML += `
-                    <div class="mvp-box" style="border-bottom: 3px solid var(--${h.id})">
-                        <img src="${h.img}" class="mini-logo">
-                        <div class="mvp-info">
-                            <b>${hData.mvpName}</b>
-                            <span>Katkı: <i>${hData.mvpPoint}</i> Puan</span>
-                        </div>
-                    </div>
-                `;
-            });
+            document.getElementById('puan_huf').innerText = data.hp;
+            document.getElementById('bar_huf').style.height = (data.hp * carpan) + 'px';
+            document.getElementById('mvp_huf').innerText = data.hm;
         }
-
-        // GMod verisi hazır olduğunda tetiklenir
-        window.onload = function() {
-            if (typeof gmod !== "undefined" && gmod.onReady) {
-                gmod.onReady();
-            }
-        };
     </script>
 </body>
 </html>
