@@ -13,27 +13,27 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: transparent; color: white; font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: center; width: 1024px; height: 1024px; overflow: hidden; }
         
-        .points-panel { width: 900px; background: var(--panel-bg); border-radius: 45px; padding: 50px; box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
+        .points-panel { width: 900px; background: var(--panel-bg); border-radius: 45px; padding: 50px; box-shadow: 0 40px 100px rgba(0,0,0,0.8); border: 2px solid rgba(255,204,51,0.1); }
         .header { text-align: center; margin-bottom: 40px; }
         .header h1 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 3.5rem; letter-spacing: 12px; }
         .header .decorator { height: 2px; width: 250px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 15px auto; }
         .header p { font-size: 0.9rem; letter-spacing: 5px; color: #555; text-transform: uppercase; }
 
-        .chart-container { background: #000000; border-radius: 25px; padding: 60px 20px 20px 20px; height: 400px; display: flex; justify-content: space-around; align-items: flex-end; margin-bottom: 30px; }
+        .chart-container { background: rgba(0,0,0,0.4); border-radius: 25px; padding: 60px 20px 20px 20px; height: 400px; display: flex; justify-content: space-around; align-items: flex-end; margin-bottom: 30px; }
         .bar-wrapper { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; width: 100px; }
-        .point-bar { width: 65px; border-radius: 15px 15px 5px 5px; position: relative; min-height: 15px; transition: height 1s ease; }
+        .point-bar { width: 65px; border-radius: 15px 15px 5px 5px; position: relative; min-height: 20px; transition: height 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .score-label { position: absolute; top: -45px; width: 100%; text-align: center; font-weight: 800; font-size: 1.5rem; }
-        .house-logo-main { width: 55px; height: 55px; margin-top: 15px; }
+        .house-logo-main { width: 55px; height: 55px; margin-top: 15px; filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); }
 
-        .sly { background: linear-gradient(to top, #1b4d31, var(--sly)); box-shadow: 0 0 20px rgba(46, 204, 113, 0.2); }
-        .rav { background: linear-gradient(to top, #1a3a5a, var(--rav)); box-shadow: 0 0 20px rgba(52, 152, 219, 0.2); }
-        .gry { background: linear-gradient(to top, #5a1a1a, var(--gry)); box-shadow: 0 0 20px rgba(231, 76, 60, 0.2); }
-        .huf { background: linear-gradient(to top, #b8860b, var(--huf)); box-shadow: 0 0 20px rgba(241, 196, 15, 0.2); }
+        .sly { background: linear-gradient(to top, #1b4d31, var(--sly)); box-shadow: 0 0 20px rgba(46, 204, 113, 0.3); }
+        .rav { background: linear-gradient(to top, #1a3a5a, var(--rav)); box-shadow: 0 0 20px rgba(52, 152, 219, 0.3); }
+        .gry { background: linear-gradient(to top, #5a1a1a, var(--gry)); box-shadow: 0 0 20px rgba(231, 76, 60, 0.3); }
+        .huf { background: linear-gradient(to top, #b8860b, var(--huf)); box-shadow: 0 0 20px rgba(241, 196, 15, 0.3); }
 
         .mvp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .mvp-box { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 22px; display: flex; align-items: center; gap: 15px; }
+        .mvp-box { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 22px; display: flex; align-items: center; gap: 15px; transition: transform 0.3s; }
         .mini-logo { width: 45px; height: 45px; }
-        .mvp-info b { font-size: 1.2rem; display: block; color: #eee; }
+        .mvp-info b { font-size: 1.2rem; display: block; color: #eee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 250px; }
         .mvp-info span { color: #666; font-size: 0.9rem; font-weight: 600; }
         .mvp-info i { color: var(--gold); font-style: normal; font-weight: 700; }
     </style>
@@ -54,17 +54,31 @@
             <div class="mvp-box" style="border-bottom: 3px solid var(--huf)"><img src="https://i.imgur.com/0c3csjs.png" class="mini-logo"><div class="mvp-info"><b id="name_huf">-</b><span>Katkı: <i id="mvppuan_huf">0</i> Puan</span></div></div>
         </div>
     </div>
+
     <script>
-        function UpdateWyxen(data) {
-            const stats = typeof data === 'string' ? JSON.parse(data) : data;
-            const houses = ['sly', 'rav', 'gry', 'huf'];
-            houses.forEach(h => {
-                document.getElementById('puan_'+h).innerText = stats[h+'p'];
-                document.getElementById('bar_'+h).style.height = Math.min(100, (stats[h+'p'] / 20)) + '%';
-                document.getElementById('name_'+h).innerText = stats[h+'m'];
-                document.getElementById('mvppuan_'+h).innerText = stats[h+'mp'] || 0;
-            });
-        }
+        // Fonksiyonu window'a bağlayarak dışarıdan erişilebilir yaptık
+        window.UpdateWyxen = function(data) {
+            try {
+                const stats = typeof data === 'string' ? JSON.parse(data) : data;
+                const houses = ['sly', 'rav', 'gry', 'huf'];
+                
+                houses.forEach(h => {
+                    const val = stats[h + 'p'] || 0;
+                    // Puanı güncelle
+                    document.getElementById('puan_' + h).innerText = val;
+                    // Bar yüksekliğini max 500 puana göre oranla (%100 doluluk 500 puan)
+                    document.getElementById('bar_' + h).style.height = Math.min(100, (val / 5)) + '%';
+                    // MVP ismi ve puanı
+                    document.getElementById('name_' + h).innerText = stats[h + 'm'] || "-";
+                    document.getElementById('mvppuan_' + h).innerText = stats[h + 'mp'] || 0;
+                });
+            } catch (e) {
+                console.error("Data Error:", e);
+            }
+        };
+
+        // GMod'a hazır olduğumuzu söyle
+        if(window.gmod) { gmod.ready(); }
     </script>
 </body>
 </html>
