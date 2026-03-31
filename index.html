@@ -2,83 +2,99 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Wyxen Academy - House Points</title>
+    <title>Wyxen Academy - Horizontal Points</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #ffcc33;
             --sly: #2ecc71; --rav: #3498db; --gry: #e74c3c; --huf: #f1c40f;
-            --panel-bg: #0e1016;
+            --panel-bg: rgba(14, 16, 22, 0.95);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: transparent; color: white; font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: center; width: 1024px; height: 1024px; overflow: hidden; }
+        body { 
+            background: transparent; 
+            color: white; 
+            font-family: 'Montserrat', sans-serif; 
+            width: 1280px; 
+            height: 720px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
+        }
         
-        .points-panel { width: 900px; background: var(--panel-bg); border-radius: 45px; padding: 50px; box-shadow: 0 40px 100px rgba(0,0,0,0.8); border: 2px solid rgba(255,204,51,0.1); }
-        .header { text-align: center; margin-bottom: 40px; }
-        .header h1 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 3.5rem; letter-spacing: 12px; }
-        .header .decorator { height: 2px; width: 250px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 15px auto; }
-        .header p { font-size: 0.9rem; letter-spacing: 5px; color: #555; text-transform: uppercase; }
+        .points-panel { 
+            width: 1200px; 
+            height: 650px;
+            background: var(--panel-bg); 
+            border-radius: 30px; 
+            padding: 30px; 
+            border: 2px solid rgba(255, 204, 51, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
 
-        .chart-container { background: rgba(0,0,0,0.4); border-radius: 25px; padding: 60px 20px 20px 20px; height: 400px; display: flex; justify-content: space-around; align-items: flex-end; margin-bottom: 30px; }
-        .bar-wrapper { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; width: 100px; }
-        .point-bar { width: 65px; border-radius: 15px 15px 5px 5px; position: relative; min-height: 20px; transition: height 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .score-label { position: absolute; top: -45px; width: 100%; text-align: center; font-weight: 800; font-size: 1.5rem; }
-        .house-logo-main { width: 55px; height: 55px; margin-top: 15px; filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); }
+        .header { text-align: center; margin-bottom: 20px; flex-shrink: 0; }
+        .header h1 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 3rem; letter-spacing: 15px; }
+        .header .decorator { height: 2px; width: 400px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 5px auto; }
 
-        .sly { background: linear-gradient(to top, #1b4d31, var(--sly)); box-shadow: 0 0 20px rgba(46, 204, 113, 0.3); }
-        .rav { background: linear-gradient(to top, #1a3a5a, var(--rav)); box-shadow: 0 0 20px rgba(52, 152, 219, 0.3); }
-        .gry { background: linear-gradient(to top, #5a1a1a, var(--gry)); box-shadow: 0 0 20px rgba(231, 76, 60, 0.3); }
-        .huf { background: linear-gradient(to top, #b8860b, var(--huf)); box-shadow: 0 0 20px rgba(241, 196, 15, 0.3); }
+        /* Yatayda barları yayan konteyner */
+        .main-content { display: flex; flex: 1; gap: 20px; align-items: stretch; }
 
-        .mvp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .mvp-box { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 22px; display: flex; align-items: center; gap: 15px; transition: transform 0.3s; }
-        .mini-logo { width: 45px; height: 45px; }
-        .mvp-info b { font-size: 1.2rem; display: block; color: #eee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 250px; }
-        .mvp-info span { color: #666; font-size: 0.9rem; font-weight: 600; }
-        .mvp-info i { color: var(--gold); font-style: normal; font-weight: 700; }
+        .chart-section { flex: 2; background: rgba(0,0,0,0.3); border-radius: 20px; display: flex; justify-content: space-around; align-items: flex-end; padding: 40px 20px; position: relative; }
+        
+        .bar-wrapper { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; width: 120px; }
+        .point-bar { width: 80px; border-radius: 10px 10px 3px 3px; position: relative; min-height: 20px; transition: height 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .score-label { position: absolute; top: -35px; width: 100%; text-align: center; font-weight: 800; font-size: 1.4rem; color: #fff; text-shadow: 0 2px 5px #000; }
+        .house-logo-main { width: 60px; height: 60px; margin-top: 15px; }
+
+        .sly { background: linear-gradient(to top, #1b4d31, var(--sly)); box-shadow: 0 0 15px rgba(46, 204, 113, 0.4); }
+        .rav { background: linear-gradient(to top, #1a3a5a, var(--rav)); box-shadow: 0 0 15px rgba(52, 152, 219, 0.4); }
+        .gry { background: linear-gradient(to top, #5a1a1a, var(--gry)); box-shadow: 0 0 15px rgba(231, 76, 60, 0.4); }
+        .huf { background: linear-gradient(to top, #b8860b, var(--huf)); box-shadow: 0 0 15px rgba(241, 196, 15, 0.4); }
+
+        .mvp-section { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        .mvp-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; display: flex; align-items: center; gap: 12px; border-left: 5px solid transparent; }
+        .mini-logo { width: 40px; height: 40px; }
+        .mvp-info b { font-size: 1rem; display: block; color: #fff; width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .mvp-info span { color: #aaa; font-size: 0.8rem; }
     </style>
 </head>
 <body>
     <div class="points-panel">
-        <div class="header"><h1>WYXEN</h1><div class="decorator"></div><p>HANE TABLOSU</p></div>
-        <div class="chart-container">
-            <div class="bar-wrapper"><div id="bar_sly" class="point-bar sly"><div id="puan_sly" class="score-label">0</div></div><img src="https://i.imgur.com/ORx7ROn.png" class="house-logo-main"></div>
-            <div class="bar-wrapper"><div id="bar_rav" class="point-bar rav"><div id="puan_rav" class="score-label">0</div></div><img src="https://i.imgur.com/Zu5zgMS.png" class="house-logo-main"></div>
-            <div class="bar-wrapper"><div id="bar_gry" class="point-bar gry"><div id="puan_gry" class="score-label">0</div></div><img src="https://i.imgur.com/sNbRwux.png" class="house-logo-main"></div>
-            <div class="bar-wrapper"><div id="bar_huf" class="point-bar huf"><div id="puan_huf" class="score-label">0</div></div><img src="https://i.imgur.com/0c3csjs.png" class="house-logo-main"></div>
-        </div>
-        <div class="mvp-grid">
-            <div class="mvp-box" style="border-bottom: 3px solid var(--sly)"><img src="https://i.imgur.com/ORx7ROn.png" class="mini-logo"><div class="mvp-info"><b id="name_sly">-</b><span>Katkı: <i id="mvppuan_sly">0</i> Puan</span></div></div>
-            <div class="mvp-box" style="border-bottom: 3px solid var(--rav)"><img src="https://i.imgur.com/Zu5zgMS.png" class="mini-logo"><div class="mvp-info"><b id="name_rav">-</b><span>Katkı: <i id="mvppuan_rav">0</i> Puan</span></div></div>
-            <div class="mvp-box" style="border-bottom: 3px solid var(--gry)"><img src="https://i.imgur.com/sNbRwux.png" class="mini-logo"><div class="mvp-info"><b id="name_gry">-</b><span>Katkı: <i id="mvppuan_gry">0</i> Puan</span></div></div>
-            <div class="mvp-box" style="border-bottom: 3px solid var(--huf)"><img src="https://i.imgur.com/0c3csjs.png" class="mini-logo"><div class="mvp-info"><b id="name_huf">-</b><span>Katkı: <i id="mvppuan_huf">0</i> Puan</span></div></div>
+        <div class="header"><h1>WYXEN ACADEMY</h1><div class="decorator"></div></div>
+        
+        <div class="main-content">
+            <div class="chart-section">
+                <div class="bar-wrapper"><div id="bar_sly" class="point-bar sly"><div id="puan_sly" class="score-label">0</div></div><img src="https://i.imgur.com/ORx7ROn.png" class="house-logo-main"></div>
+                <div class="bar-wrapper"><div id="bar_rav" class="point-bar rav"><div id="puan_rav" class="score-label">0</div></div><img src="https://i.imgur.com/Zu5zgMS.png" class="house-logo-main"></div>
+                <div class="bar-wrapper"><div id="bar_gry" class="point-bar gry"><div id="puan_gry" class="score-label">0</div></div><img src="https://i.imgur.com/sNbRwux.png" class="house-logo-main"></div>
+                <div class="bar-wrapper"><div id="bar_huf" class="point-bar huf"><div id="puan_huf" class="score-label">0</div></div><img src="https://i.imgur.com/0c3csjs.png" class="house-logo-main"></div>
+            </div>
+
+            <div class="mvp-section">
+                <div class="mvp-box" style="border-color: var(--sly)"><img src="https://i.imgur.com/ORx7ROn.png" class="mini-logo"><div class="mvp-info"><b id="name_sly">-</b><span>Katkı: <i id="mvppuan_sly">0</i></span></div></div>
+                <div class="mvp-box" style="border-color: var(--rav)"><img src="https://i.imgur.com/Zu5zgMS.png" class="mini-logo"><div class="mvp-info"><b id="name_rav">-</b><span>Katkı: <i id="mvppuan_rav">0</i></span></div></div>
+                <div class="mvp-box" style="border-color: var(--gry)"><img src="https://i.imgur.com/sNbRwux.png" class="mini-logo"><div class="mvp-info"><b id="name_gry">-</b><span>Katkı: <i id="mvppuan_gry">0</i></span></div></div>
+                <div class="mvp-box" style="border-color: var(--huf)"><img src="https://i.imgur.com/0c3csjs.png" class="mini-logo"><div class="mvp-info"><b id="name_huf">-</b><span>Katkı: <i id="mvppuan_huf">0</i></span></div></div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Fonksiyonu window'a bağlayarak dışarıdan erişilebilir yaptık
         window.UpdateWyxen = function(data) {
             try {
                 const stats = typeof data === 'string' ? JSON.parse(data) : data;
                 const houses = ['sly', 'rav', 'gry', 'huf'];
-                
                 houses.forEach(h => {
-                    const val = stats[h + 'p'] || 0;
-                    // Puanı güncelle
-                    document.getElementById('puan_' + h).innerText = val;
-                    // Bar yüksekliğini max 500 puana göre oranla (%100 doluluk 500 puan)
-                    document.getElementById('bar_' + h).style.height = Math.min(100, (val / 5)) + '%';
-                    // MVP ismi ve puanı
-                    document.getElementById('name_' + h).innerText = stats[h + 'm'] || "-";
-                    document.getElementById('mvppuan_' + h).innerText = stats[h + 'mp'] || 0;
+                    const p = stats[h+'p'] || 0;
+                    document.getElementById('puan_'+h).innerText = p;
+                    document.getElementById('bar_'+h).style.height = Math.min(100, (p / 10)) + '%'; // 1000 puanda tam dolar
+                    document.getElementById('name_'+h).innerText = stats[h+'m'] || "-";
+                    document.getElementById('mvppuan_'+h).innerText = stats[h+'mp'] || 0;
                 });
-            } catch (e) {
-                console.error("Data Error:", e);
-            }
+            } catch(e) {}
         };
-
-        // GMod'a hazır olduğumuzu söyle
-        if(window.gmod) { gmod.ready(); }
     </script>
 </body>
 </html>
