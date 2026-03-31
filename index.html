@@ -2,82 +2,70 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Wyxen Academy - Horizontal Points</title>
+    <title>Wyxen 1190x600</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #ffcc33;
             --sly: #2ecc71; --rav: #3498db; --gry: #e74c3c; --huf: #f1c40f;
-            --panel-bg: rgba(14, 16, 22, 0.95);
+            --panel-bg: rgba(10, 12, 18, 0.98);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: transparent; 
-            color: white; 
-            font-family: 'Montserrat', sans-serif; 
-            width: 1280px; 
-            height: 720px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            overflow: hidden; 
-        }
+        body { background: transparent; width: 1190px; height: 600px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
         
         .points-panel { 
-            width: 1200px; 
-            height: 650px;
-            background: var(--panel-bg); 
-            border-radius: 30px; 
-            padding: 30px; 
-            border: 2px solid rgba(255, 204, 51, 0.2);
-            display: flex;
-            flex-direction: column;
+            width: 1150px; height: 580px; background: var(--panel-bg); border-radius: 25px; 
+            padding: 20px; border: 2px solid rgba(255, 204, 51, 0.3);
+            display: flex; flex-direction: column; gap: 15px;
         }
 
-        .header { text-align: center; margin-bottom: 20px; flex-shrink: 0; }
-        .header h1 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 3rem; letter-spacing: 15px; }
-        .header .decorator { height: 2px; width: 400px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 5px auto; }
+        .header { text-align: center; }
+        .header h1 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 2.8rem; letter-spacing: 15px; }
 
-        /* Yatayda barları yayan konteyner */
-        .main-content { display: flex; flex: 1; gap: 20px; align-items: stretch; }
+        /* Grafikler Üstte */
+        .chart-area { 
+            flex: 1.2; background: rgba(255,255,255,0.02); border-radius: 20px; 
+            display: flex; justify-content: space-around; align-items: flex-end; 
+            padding: 20px 40px; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .bar-wrap { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; width: 150px; }
+        .bar { width: 85px; border-radius: 8px 8px 3px 3px; position: relative; min-height: 20px; transition: height 1s ease-out; }
+        .puan-val { position: absolute; top: -35px; width: 100%; text-align: center; font-weight: 800; font-size: 1.8rem; color: #fff; }
+        .h-icon { width: 60px; height: 60px; margin-top: 10px; }
 
-        .chart-section { flex: 2; background: rgba(0,0,0,0.3); border-radius: 20px; display: flex; justify-content: space-around; align-items: flex-end; padding: 40px 20px; position: relative; }
-        
-        .bar-wrapper { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; width: 120px; }
-        .point-bar { width: 80px; border-radius: 10px 10px 3px 3px; position: relative; min-height: 20px; transition: height 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .score-label { position: absolute; top: -35px; width: 100%; text-align: center; font-weight: 800; font-size: 1.4rem; color: #fff; text-shadow: 0 2px 5px #000; }
-        .house-logo-main { width: 60px; height: 60px; margin-top: 15px; }
+        .sly { background: linear-gradient(to top, #1b4d31, var(--sly)); }
+        .rav { background: linear-gradient(to top, #1a3a5a, var(--rav)); }
+        .gry { background: linear-gradient(to top, #5a1a1a, var(--gry)); }
+        .huf { background: linear-gradient(to top, #b8860b, var(--huf)); }
 
-        .sly { background: linear-gradient(to top, #1b4d31, var(--sly)); box-shadow: 0 0 15px rgba(46, 204, 113, 0.4); }
-        .rav { background: linear-gradient(to top, #1a3a5a, var(--rav)); box-shadow: 0 0 15px rgba(52, 152, 219, 0.4); }
-        .gry { background: linear-gradient(to top, #5a1a1a, var(--gry)); box-shadow: 0 0 15px rgba(231, 76, 60, 0.4); }
-        .huf { background: linear-gradient(to top, #b8860b, var(--huf)); box-shadow: 0 0 15px rgba(241, 196, 15, 0.4); }
-
-        .mvp-section { flex: 1; display: flex; flex-direction: column; gap: 10px; }
-        .mvp-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; display: flex; align-items: center; gap: 12px; border-left: 5px solid transparent; }
-        .mini-logo { width: 40px; height: 40px; }
-        .mvp-info b { font-size: 1rem; display: block; color: #fff; width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .mvp-info span { color: #aaa; font-size: 0.8rem; }
+        /* MVP'ler Altta */
+        .mvp-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .mvp-item { 
+            background: rgba(255,255,255,0.04); padding: 10px; border-radius: 12px; 
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            border-bottom: 4px solid transparent;
+        }
+        .mvp-item img { width: 40px; height: 40px; margin-bottom: 5px; }
+        .mvp-item b { font-size: 1rem; color: #fff; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .mvp-item span { color: var(--gold); font-size: 0.8rem; font-weight: 600; }
     </style>
 </head>
 <body>
     <div class="points-panel">
-        <div class="header"><h1>WYXEN ACADEMY</h1><div class="decorator"></div></div>
+        <div class="header"><h1>WYXEN ACADEMY</h1></div>
         
-        <div class="main-content">
-            <div class="chart-section">
-                <div class="bar-wrapper"><div id="bar_sly" class="point-bar sly"><div id="puan_sly" class="score-label">0</div></div><img src="https://i.imgur.com/ORx7ROn.png" class="house-logo-main"></div>
-                <div class="bar-wrapper"><div id="bar_rav" class="point-bar rav"><div id="puan_rav" class="score-label">0</div></div><img src="https://i.imgur.com/Zu5zgMS.png" class="house-logo-main"></div>
-                <div class="bar-wrapper"><div id="bar_gry" class="point-bar gry"><div id="puan_gry" class="score-label">0</div></div><img src="https://i.imgur.com/sNbRwux.png" class="house-logo-main"></div>
-                <div class="bar-wrapper"><div id="bar_huf" class="point-bar huf"><div id="puan_huf" class="score-label">0</div></div><img src="https://i.imgur.com/0c3csjs.png" class="house-logo-main"></div>
-            </div>
+        <div class="chart-area">
+            <div class="bar-wrap"><div id="bar_sly" class="bar sly"><div id="puan_sly" class="puan-val">0</div></div><img src="https://i.imgur.com/ORx7ROn.png" class="h-icon"></div>
+            <div class="bar-wrap"><div id="bar_rav" class="bar rav"><div id="puan_rav" class="puan-val">0</div></div><img src="https://i.imgur.com/Zu5zgMS.png" class="h-icon"></div>
+            <div class="bar-wrap"><div id="bar_gry" class="bar gry"><div id="puan_gry" class="puan-val">0</div></div><img src="https://i.imgur.com/sNbRwux.png" class="h-icon"></div>
+            <div class="bar-wrap"><div id="bar_huf" class="bar huf"><div id="puan_huf" class="puan-val">0</div></div><img src="https://i.imgur.com/0c3csjs.png" class="h-icon"></div>
+        </div>
 
-            <div class="mvp-section">
-                <div class="mvp-box" style="border-color: var(--sly)"><img src="https://i.imgur.com/ORx7ROn.png" class="mini-logo"><div class="mvp-info"><b id="name_sly">-</b><span>Katkı: <i id="mvppuan_sly">0</i></span></div></div>
-                <div class="mvp-box" style="border-color: var(--rav)"><img src="https://i.imgur.com/Zu5zgMS.png" class="mini-logo"><div class="mvp-info"><b id="name_rav">-</b><span>Katkı: <i id="mvppuan_rav">0</i></span></div></div>
-                <div class="mvp-box" style="border-color: var(--gry)"><img src="https://i.imgur.com/sNbRwux.png" class="mini-logo"><div class="mvp-info"><b id="name_gry">-</b><span>Katkı: <i id="mvppuan_gry">0</i></span></div></div>
-                <div class="mvp-box" style="border-color: var(--huf)"><img src="https://i.imgur.com/0c3csjs.png" class="mini-logo"><div class="mvp-info"><b id="name_huf">-</b><span>Katkı: <i id="mvppuan_huf">0</i></span></div></div>
-            </div>
+        <div class="mvp-row">
+            <div class="mvp-item" style="border-color: var(--sly)"><img src="https://i.imgur.com/ORx7ROn.png"><b id="name_sly">-</b><span>+<i id="mvppuan_sly">0</i> Puan</span></div>
+            <div class="mvp-item" style="border-color: var(--rav)"><img src="https://i.imgur.com/Zu5zgMS.png"><b id="name_rav">-</b><span>+<i id="mvppuan_rav">0</i> Puan</span></div>
+            <div class="mvp-item" style="border-color: var(--gry)"><img src="https://i.imgur.com/sNbRwux.png"><b id="name_gry">-</b><span>+<i id="mvppuan_gry">0</i> Puan</span></div>
+            <div class="mvp-item" style="border-color: var(--huf)"><img src="https://i.imgur.com/0c3csjs.png"><b id="name_huf">-</b><span>+<i id="mvppuan_huf">0</i> Puan</span></div>
         </div>
     </div>
 
@@ -89,7 +77,7 @@
                 houses.forEach(h => {
                     const p = stats[h+'p'] || 0;
                     document.getElementById('puan_'+h).innerText = p;
-                    document.getElementById('bar_'+h).style.height = Math.min(100, (p / 10)) + '%'; // 1000 puanda tam dolar
+                    document.getElementById('bar_'+h).style.height = Math.min(100, (p / 10)) + '%'; 
                     document.getElementById('name_'+h).innerText = stats[h+'m'] || "-";
                     document.getElementById('mvppuan_'+h).innerText = stats[h+'mp'] || 0;
                 });
